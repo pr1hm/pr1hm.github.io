@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>prthm — coming soon</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Monsieur+La+Doulaise&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:      #141210;
+      --ink-60:   rgba(20,18,16,0.55);
+      --ink-20:   rgba(20,18,16,0.15);
+      --accent:   #4a4540;
+      --chip-bg:  rgba(255,255,255,0.72);
+      --chip-border: rgba(20,18,16,0.10);
+    }
+
+    html, body {
+      width: 100%; height: 100%;
+      background: #f7f5f2;
+      color: var(--ink);
+      font-family: 'Times New Roman', Times, serif;
+      overflow: hidden;
+      cursor: none;
+    }
+
+    /* ── SHADER CANVAS ── */
+    #glc {
+      position: fixed;
+      inset: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+    }
+
+    /* ── GRAIN ── */
+    .grain {
+      position: fixed; inset: -50%;
+      width: 200%; height: 200%;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      opacity: 0.032;
+      pointer-events: none;
+      z-index: 2;
+      animation: gs 0.4s steps(2) infinite;
+    }
+    @keyframes gs {
+      0%   { transform: translate(0,0); }
+      33%  { transform: translate(-1%,1%); }
+      66%  { transform: translate(1%,-1%); }
+      100% { transform: translate(0,0); }
+    }
+
+    /* ── LAYOUT ── */
+    .stage {
+      position: relative;
+      z-index: 10;
+      width: 100%; height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 2rem;
+      gap: 0;
+    }
+
+    /* ── EYEBROW ── */
+    .eyebrow {
+      font-size: 0.6rem;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--ink-60);
+      opacity: 0;
+      animation: up 0.9s cubic-bezier(.22,1,.36,1) forwards 0.1s;
+    }
+
+    /* ── LOGO ── */
+    .logo {
+      font-family: 'Monsieur La Doulaise', cursive;
+      font-style: italic;
+      font-size: clamp(4rem, 9vw, 6.5rem);
+      color: var(--ink);
+      line-height: 1;
+      margin-top: 1.4rem;
+      opacity: 0;
+      animation: up 1s cubic-bezier(.22,1,.36,1) forwards 0.25s;
+      text-shadow:
+        0 1px 0 rgba(255,255,255,0.9),
+        0 6px 28px rgba(20,18,16,0.10);
+    }
+
+    /* ── THIN RULE ── */
+    .rule {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      margin: 2rem 0;
+      opacity: 0;
+      animation: fade 0.8s ease forwards 0.5s;
+    }
+    .rule-line {
+      width: 36px; height: 1px;
+      background: var(--ink-20);
+    }
+    .rule-diamond {
+      width: 5px; height: 5px;
+      background: var(--accent);
+      transform: rotate(45deg);
+      flex-shrink: 0;
+    }
+
+    /* ── HEADLINE ── */
+    .headline {
+      text-align: center;
+      line-height: 1;
+      opacity: 0;
+      animation: up 1s cubic-bezier(.22,1,.36,1) forwards 0.35s;
+    }
+    .hl-script {
+      display: block;
+      font-family: 'Monsieur La Doulaise', cursive;
+      font-style: italic;
+      font-size: clamp(2.6rem, 6.5vw, 5rem);
+      color: var(--ink);
+      line-height: 1.15;
+    }
+    .hl-serif {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(4rem, 11vw, 8.5rem);
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.03em;
+      line-height: 0.88;
+      text-shadow:
+        0 2px 0 rgba(255,255,255,0.85),
+        0 10px 40px rgba(20,18,16,0.09);
+    }
+
+    /* ── TAGLINE ── */
+    .tagline {
+      margin-top: 2.6rem;
+      font-size: clamp(0.75rem, 1.6vw, 0.85rem);
+      font-weight: 300;
+      color: var(--ink-60);
+      text-align: center;
+      line-height: 1.9;
+      max-width: 340px;
+      letter-spacing: 0.015em;
+      opacity: 0;
+      animation: up 0.9s cubic-bezier(.22,1,.36,1) forwards 0.6s;
+    }
+    .tagline strong {
+      color: var(--ink);
+      font-weight: 400;
+    }
+
+    /* ── EMAIL CHIP ── */
+    .email-wrap {
+      margin-top: 2.4rem;
+      opacity: 0;
+      animation: up 0.9s cubic-bezier(.22,1,.36,1) forwards 0.78s;
+    }
+    .email-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      background: var(--chip-bg);
+      border: 1px solid var(--chip-border);
+      border-radius: 100px;
+      padding: 0.58rem 1.3rem;
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 0.76rem;
+      font-weight: 400;
+      color: var(--ink);
+      text-decoration: none;
+      cursor: none;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow:
+        0 1px 0 rgba(255,255,255,0.9) inset,
+        0 4px 16px rgba(20,18,16,0.06);
+      transition: box-shadow 0.25s, background 0.25s;
+    }
+    .email-chip:hover {
+      background: rgba(255,255,255,0.88);
+      box-shadow:
+        0 1px 0 rgba(255,255,255,1) inset,
+        0 8px 28px rgba(20,18,16,0.10);
+    }
+    .email-chip svg {
+      width: 12px; height: 12px;
+      stroke: var(--accent);
+      flex-shrink: 0;
+    }
+
+    /* ── LIVE BADGE ── */
+    .live-badge {
+      margin-top: 2.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.42rem;
+      font-size: 0.58rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-60);
+      opacity: 0;
+      animation: fade 1s ease forwards 1.1s;
+    }
+    .live-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: #3a7d5a;
+      box-shadow: 0 0 6px rgba(58,125,90,0.6);
+      animation: pulse 2.2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.45; transform: scale(0.8); }
+    }
+
+    /* ── CORNER MARKS ── */
+    .corner {
+      position: fixed;
+      width: 14px; height: 14px;
+      z-index: 10;
+      opacity: 0.15;
+    }
+    .corner--tl { top: 26px; left: 26px; border-top: 1px solid var(--ink); border-left: 1px solid var(--ink); }
+    .corner--tr { top: 26px; right: 26px; border-top: 1px solid var(--ink); border-right: 1px solid var(--ink); }
+    .corner--bl { bottom: 26px; left: 26px; border-bottom: 1px solid var(--ink); border-left: 1px solid var(--ink); }
+    .corner--br { bottom: 26px; right: 26px; border-bottom: 1px solid var(--ink); border-right: 1px solid var(--ink); }
+
+    /* ── WATERMARK ── */
+    .wm {
+      position: fixed;
+      bottom: 22px; left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.52rem;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--ink-20);
+      z-index: 10;
+      white-space: nowrap;
+    }
+
+    /* ── CURSOR ── */
+    .c-dot {
+      position: fixed; z-index: 9999;
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--ink);
+      pointer-events: none;
+      transform: translate(-50%,-50%);
+    }
+    .c-ring {
+      position: fixed; z-index: 9998;
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      border: 1px solid rgba(20,18,16,0.22);
+      pointer-events: none;
+      transform: translate(-50%,-50%);
+      transition: width .2s, height .2s, border-color .2s;
+    }
+    .c-ring.h { width: 42px; height: 42px; border-color: rgba(20,18,16,0.5); }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed; bottom: 56px; left: 50%;
+      transform: translateX(-50%) translateY(6px);
+      background: var(--ink); color: #f7f5f2;
+      font-size: 0.65rem; letter-spacing: 0.12em;
+      padding: 0.38rem 0.85rem; border-radius: 6px;
+      opacity: 0; pointer-events: none; z-index: 999;
+      transition: opacity .24s, transform .24s;
+    }
+    .toast.on { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* ── ANIMS ── */
+    @keyframes up {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fade {
+      from { opacity: 0; } to { opacity: 1; }
+    }
+
+    @media (max-width: 480px) {
+      html, body { cursor: auto; overflow: auto; }
+      .c-dot, .c-ring { display: none; }
+      .corner { display: none; }
+      .stage { height: auto; min-height: 100vh; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="glc"></canvas>
+<div class="grain"></div>
+
+<div class="corner corner--tl"></div>
+<div class="corner corner--tr"></div>
+<div class="corner corner--bl"></div>
+<div class="corner corner--br"></div>
+
+<div class="c-dot"  id="cDot"></div>
+<div class="c-ring" id="cRing"></div>
+
+<div class="stage">
+
+  <span class="eyebrow">self-hosted &nbsp;·&nbsp; prthm.is-a.dev</span>
+
+  <div class="logo">prthm</div>
+
+  <div class="rule">
+    <div class="rule-line"></div>
+    <div class="rule-diamond"></div>
+    <div class="rule-line"></div>
+  </div>
+
+  <div class="headline">
+    <span class="hl-script">Coming</span>
+    <span class="hl-serif">SOON</span>
+  </div>
+
+  <p class="tagline">
+    A <strong>self-hosted</strong> corner of the internet —<br>
+    running on my own hardware, built from scratch.<br>
+    Stay close.
+  </p>
+
+  <div class="email-wrap">
+    <a class="email-chip" id="emailBtn" href="mailto:contact@prthm.is-a.dev">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="4" width="20" height="16" rx="2"/>
+        <path d="m2 7 10 7 10-7"/>
+      </svg>
+      contact@prthm.is-a.dev
+    </a>
+  </div>
+
+  <div class="live-badge">
+    <span class="live-dot"></span>
+    server online
+  </div>
+
+</div>
+
+<div class="wm">prthm.is-a.dev</div>
+<div class="toast" id="toast">copied</div>
+
+<!-- ── WEBGL SHADER ──────────────────────────────────────────────────── -->
+<script>
+(function(){
+  const canvas = document.getElementById('glc');
+  const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+
+  function resize(){
+    canvas.width  = innerWidth;
+    canvas.height = innerHeight;
+    if(gl) gl.viewport(0, 0, canvas.width, canvas.height);
+  }
+  resize();
+  addEventListener('resize', resize);
+
+  if(!gl) return;
+
+  /* ── vertex ── */
+  const vs = `
+    attribute vec2 p;
+    void main(){ gl_Position = vec4(p,0.,1.); }
+  `;
+
+  /*
+    Light-mode shader:
+    - Base is warm white/cream (#f7f5f2)
+    - Slow organic flow field using simplex noise
+    - Palette: soft warm stone, light slate, pale linen
+    - Mouse creates a gentle brightening ripple
+    - Very subtle — stays out of the way of the text
+  */
+  const fs = `
+    precision highp float;
+    uniform float T;
+    uniform vec2  R;
+    uniform vec2  M;   /* mouse in gl coords */
+
+    /* ── compact simplex noise ── */
+    vec3 p3(vec3 x){ return fract(x*vec3(.1031,.1030,.0973)); }
+    float hash(vec2 p){
+      vec3 p3=fract(vec3(p.xyx)*0.1031);
+      p3+=dot(p3,p3.yzx+33.33);
+      return fract((p3.x+p3.y)*p3.z);
+    }
+
+    vec3 mod289v(vec3 x){ return x-floor(x*(1./289.))*289.; }
+    vec2 mod289v(vec2 x){ return x-floor(x*(1./289.))*289.; }
+    vec3 perm(vec3 x){ return mod289v(((x*34.)+1.)*x); }
+
+    float snoise(vec2 v){
+      const vec4 C=vec4(.211324865,.366025404,-.577350269,.024390244);
+      vec2 i=floor(v+dot(v,C.yy));
+      vec2 x0=v-i+dot(i,C.xx);
+      vec2 i1=(x0.x>x0.y)?vec2(1.,0.):vec2(0.,1.);
+      vec4 x12=x0.xyxy+C.xxzz; x12.xy-=i1;
+      i=mod289v(i);
+      vec3 pr=perm(perm(i.y+vec3(0.,i1.y,1.))+i.x+vec3(0.,i1.x,1.));
+      vec3 m=max(.5-vec3(dot(x0,x0),dot(x12.xy,x12.xy),dot(x12.zw,x12.zw)),0.);
+      m=m*m; m=m*m;
+      vec3 x=2.*fract(pr*C.www)-1.;
+      vec3 h=abs(x)-.5;
+      vec3 ox=floor(x+.5);
+      vec3 a0=x-ox;
+      m*=1.79284291-.85373472*(a0*a0+h*h);
+      vec3 g;
+      g.x=a0.x*x0.x+h.x*x0.y;
+      g.yz=a0.yz*x12.xz+h.yz*x12.yw;
+      return 130.*dot(m,g);
+    }
+
+    void main(){
+      vec2 uv = gl_FragCoord.xy / R;
+      vec2 mu = M / R;
+
+      /* slow drift */
+      float t = T * 0.10;
+
+      /* 3-octave flow — very gentle amplitudes */
+      float n1 = snoise(uv * 1.8 + vec2( t*0.30,  t*0.22));
+      float n2 = snoise(uv * 3.2 + vec2(-t*0.18,  t*0.35) + n1*0.35);
+      float n3 = snoise(uv * 5.5 + vec2( t*0.12, -t*0.20) + n2*0.25);
+      float flow = n1*0.55 + n2*0.30 + n3*0.15;
+
+      /* mouse warmth — subtle radial glow */
+      float md = length(uv - mu);
+      float mg = smoothstep(0.55, 0.0, md) * 0.22;
+      flow += mg * snoise(uv*3.0 + M*0.002 + t*0.5);
+
+      /* remap to [0,1] */
+      float f = flow * 0.5 + 0.5;
+
+      /*
+        Palette — all light, neutral, masculine:
+          p0  warm white   #f7f5f2
+          p1  light linen  #ede9e2
+          p2  soft stone   #e0dbd2
+          p3  pale slate   #dcdfe6
+        No pink, no lavender, no purple.
+      */
+      vec3 p0 = vec3(0.969, 0.961, 0.949);
+      vec3 p1 = vec3(0.929, 0.914, 0.886);
+      vec3 p2 = vec3(0.878, 0.859, 0.824);
+      vec3 p3v= vec3(0.863, 0.871, 0.902);
+
+      vec3 col = mix(p0, p1, smoothstep(0.0, 0.40, f));
+      col = mix(col, p2, smoothstep(0.35, 0.65, f));
+      col = mix(col, p3v,smoothstep(0.60, 1.00, f) * 0.55);
+
+      /* edge vignette — darkens border slightly, keeps centre bright */
+      float vig = 1.0 - smoothstep(0.30, 0.90, length((uv - 0.5) * vec2(1.0, 1.2)));
+      col = mix(col * 0.91, col, vig);
+
+      /* mouse bright spot */
+      col += vec3(mg * 0.06);
+
+      gl_FragColor = vec4(col, 1.0);
+    }
+  `;
+
+  function mkShader(type, src){
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    return s;
+  }
+
+  const prog = gl.createProgram();
+  gl.attachShader(prog, mkShader(gl.VERTEX_SHADER,   vs));
+  gl.attachShader(prog, mkShader(gl.FRAGMENT_SHADER, fs));
+  gl.linkProgram(prog);
+  gl.useProgram(prog);
+
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER,
+    new Float32Array([-1,-1, 1,-1, -1,1, 1,1]),
+    gl.STATIC_DRAW);
+
+  const ap = gl.getAttribLocation(prog,'p');
+  gl.enableVertexAttribArray(ap);
+  gl.vertexAttribPointer(ap, 2, gl.FLOAT, false, 0, 0);
+
+  const uT = gl.getUniformLocation(prog,'T');
+  const uR = gl.getUniformLocation(prog,'R');
+  const uM = gl.getUniformLocation(prog,'M');
+
+  let smx = innerWidth/2, smy = innerHeight/2;
+  document.addEventListener('mousemove', e => { smx=e.clientX; smy=e.clientY; });
+
+  (function loop(t){
+    gl.uniform1f(uT, t * 0.001);
+    gl.uniform2f(uR, canvas.width, canvas.height);
+    gl.uniform2f(uM, smx, canvas.height - smy);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    requestAnimationFrame(loop);
+  })(0);
+})();
+</script>
+
+<!-- ── CURSOR + EMAIL ────────────────────────────────────────────────── -->
+<script>
+  /* cursor */
+  const dot  = document.getElementById('cDot');
+  const ring = document.getElementById('cRing');
+  let mx=innerWidth/2, my=innerHeight/2, rx=mx, ry=my;
+  document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; });
+  (function tick(){
+    dot.style.left  = mx+'px'; dot.style.top  = my+'px';
+    rx+=(mx-rx)*0.10; ry+=(my-ry)*0.10;
+    ring.style.left = rx+'px'; ring.style.top = ry+'px';
+    requestAnimationFrame(tick);
+  })();
+  document.querySelectorAll('a').forEach(el=>{
+    el.addEventListener('mouseenter', ()=> ring.classList.add('h'));
+    el.addEventListener('mouseleave', ()=> ring.classList.remove('h'));
+  });
+
+  /* email copy */
+  const toast = document.getElementById('toast');
+  document.getElementById('emailBtn').addEventListener('click', e=>{
+    e.preventDefault();
+    navigator.clipboard.writeText('contact@prthm.is-a.dev').catch(()=>{});
+    toast.classList.add('on');
+    setTimeout(()=> toast.classList.remove('on'), 1700);
+  });
+</script>
+</body>
+</html>
