@@ -44,7 +44,8 @@ export const SEOHead: React.FC<SEOHeadProps> = ({
       ],
       sameAs: [
         'https://github.com/pr1hm',
-        'https://linkedin.com/in/pr1hm/'
+        'https://linkedin.com/in/pr1hm/',
+        'https://instagram.com/prthm.xyz'
       ]
     },
     {

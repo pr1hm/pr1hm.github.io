@@ -1,6 +1,6 @@
 import React from 'react';
 import { Mail, ArrowUpRight, Terminal, ShieldCheck } from 'lucide-react';
-import { GithubIcon, LinkedinIcon } from './Icons';
+import { GithubIcon, LinkedinIcon, InstagramIcon } from './Icons';
 
 export const Footer: React.FC = () => {
   return (
@@ -89,6 +89,19 @@ export const Footer: React.FC = () => {
                 >
                   <LinkedinIcon size={13} />
                   <span>LinkedIn</span>
+                  <ArrowUpRight size={11} className="text-zinc-400" />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://instagram.com/prthm.xyz"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 hover:text-white transition-colors"
+                  aria-label="Instagram Profile of Pratham Solanki"
+                >
+                  <InstagramIcon size={13} />
+                  <span>Instagram</span>
                   <ArrowUpRight size={11} className="text-zinc-400" />
                 </a>
               </li>

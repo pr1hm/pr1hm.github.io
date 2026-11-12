@@ -4,6 +4,7 @@
 > **Contact:** [ahoy@prthm.xyz](mailto:ahoy@prthm.xyz)  
 > **GitHub:** [https://github.com/pr1hm](https://github.com/pr1hm)  
 > **LinkedIn:** [https://linkedin.com/in/pr1hm/](https://linkedin.com/in/pr1hm/)  
+> **Instagram:** [https://instagram.com/prthm.xyz](https://instagram.com/prthm.xyz)  
 
 ---
 

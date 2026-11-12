@@ -5,6 +5,7 @@
 > Canonical Website: https://prthm.xyz
 > GitHub: https://github.com/pr1hm
 > LinkedIn: https://linkedin.com/in/pr1hm/
+> Instagram: https://instagram.com/prthm.xyz
 
 ## Core Specializations
 - AI & Multimodal Intelligence: Qwen2-VL, OpenAI Whisper, Local Hugging Face Inference, Scene-Change Sampling, Autonomous Examination Proctoring.

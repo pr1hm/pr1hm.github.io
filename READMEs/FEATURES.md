@@ -7,3 +7,5 @@
 - [Terminal Monospace Favicon Design](../docs/terminal-favicon-design.md) - Custom SVG terminal bracket `[P]` favicon crafted for razor-sharp tab visibility across dark and light browser chrome.
 - [Cloudflare Pages Deployment & Remote Repository Synchronization](../docs/cloudflare-pages-deployment-and-repo-clean.md) - Complete remote overwrite of `pr1hm/pr1hm.github.io` on GitHub, purging of `unslop`, and step-by-step production Cloudflare Pages deployment configuration.
 - [Navbar Logo Removal & Radius Refinement](../docs/navbar-logo-removal-and-radius-tightening.md) - Removed `PS` monogram logo from the navbar, reduced navbar corner radius to `rounded-2xl`, and trimmed horizontal width.
+- [Instagram Social Identity Integration](../docs/instagram-social-integration.md) - Added Instagram (@prthm.xyz) to footer social bar, created custom SVG icon, and synchronized Schema.org sameAs graph.
+- [Marquee Topic Diversity & Motion Enhancement](../docs/marquee-topic-diversity.md) - Replaced repetitive footer marquee with an 8-topic dynamic stream covering systems, AI video, Kubernetes, edge runtimes, and zero-trust security.

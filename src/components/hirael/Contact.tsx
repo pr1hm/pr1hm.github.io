@@ -2,9 +2,20 @@ import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ArrowUpRight, RingLink } from './primitives';
 import { BACKGROUND_VIDEO } from './Hero';
-import { GithubIcon, LinkedinIcon } from '../Icons';
+import { GithubIcon, LinkedinIcon, InstagramIcon } from '../Icons';
 
 const EMAIL = 'ahoy@prthm.xyz';
+
+const MARQUEE_TOPICS = [
+  'BUILDING RESILIENT SYSTEMS',
+  'OFFLINE VIDEO INTELLIGENCE',
+  'HIGH-AVAILABILITY KUBERNETES',
+  'EMBEDDED EDGE RUNTIMES',
+  'AUTONOMOUS AI AGENTS',
+  'OPEN-SOURCE TOOLING',
+  'ZERO-TRUST ARCHITECTURE',
+  'SCALABLE CLOUD INFRASTRUCTURE',
+];
 
 const Marquee: React.FC = () => {
   const trackRef = useRef<HTMLDivElement>(null);
@@ -15,7 +26,7 @@ const Marquee: React.FC = () => {
     const ctx = gsap.context(() => {
       gsap.to(trackRef.current, {
         xPercent: -50,
-        duration: 30,
+        duration: 45,
         ease: 'none',
         repeat: -1,
       });
@@ -28,13 +39,14 @@ const Marquee: React.FC = () => {
     <div className="flex overflow-hidden py-3 border-y border-[hsl(var(--stroke))]" aria-hidden="true">
       <div ref={trackRef} className="flex w-max shrink-0">
         {Array.from({ length: 2 }).map((_, group) => (
-          <div key={group} className="flex shrink-0">
-            {Array.from({ length: 6 }).map((_, i) => (
+          <div key={group} className="flex shrink-0 items-center">
+            {MARQUEE_TOPICS.map((topic, i) => (
               <span
                 key={i}
-                className="font-display px-8 text-2xl sm:text-4xl tracking-tight whitespace-nowrap text-[#f4f4f5]/85 uppercase italic"
+                className="font-display px-6 text-xl sm:text-3xl lg:text-4xl tracking-tight whitespace-nowrap text-[#f4f4f5]/85 uppercase italic flex items-center gap-6"
               >
-                BUILDING RESILIENT SYSTEMS &bull; CLOUD &amp; AI &bull;&nbsp;
+                <span>{topic}</span>
+                <span className="text-[#71717a] font-normal not-italic text-sm sm:text-base">&bull;</span>
               </span>
             ))}
           </div>
@@ -110,6 +122,15 @@ export const Contact: React.FC = () => {
               className="flex size-8 items-center justify-center rounded-full border border-[hsl(var(--stroke))] text-zinc-300 transition-colors duration-300 hover:border-white/30 hover:bg-white/10 hover:text-white"
             >
               <LinkedinIcon size={14} />
+            </a>
+            <a
+              href="https://instagram.com/prthm.xyz"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Instagram Profile"
+              className="flex size-8 items-center justify-center rounded-full border border-[hsl(var(--stroke))] text-zinc-300 transition-colors duration-300 hover:border-white/30 hover:bg-white/10 hover:text-white"
+            >
+              <InstagramIcon size={14} />
             </a>
           </div>
 
