@@ -1,0 +1,7 @@
+# Portfolio Features & Architecture Directory
+
+- [Personal Portfolio & Engineering Blog](../docs/portfolio-and-blog-architecture.md) - Initial responsive portfolio and technical blog built with Vite, React, TypeScript, Tailwind CSS, and full SEO/AEO/GEO structured data engine.
+- [Hirael Editorial Design Transformation](../docs/hirael-design-transformation.md) - High-end, dark-editorial visual redesign based on Hirael (`https://hirael.com/r/portfolio.json`) featuring GSAP-powered motion choreography, loading counter, ambient video hero, halftone bento grid, and Instrument Serif typography.
+- [Editorial Minimalism & Layout Refactor](../docs/editorial-minimalism-refactor.md) - Strict editorial minimalism overhaul: migrated domain to `https://prthm.xyz`, email to `ahoy@prthm.xyz`, pure monochrome color palette, noise-free project bento cards, compact single-line experience rows, and real metrics (9.15 CGPA, 3K+ traffic, 10+ systems).
+- [Ground-Truth Project Specifications & Blog Synchronization](../docs/ground-truth-projects-and-content.md) - Integrated real repository specs for FrameRead (Whisper + Qwen2-VL), OpenSeal (FastAPI DocuSign alternative at openseal.prthm.xyz), Conlatus AI (SEB + CV proctoring), and Bardoli commercial deployments (bestfurniture.store & jeetfurniture.com), paired with accurate GitHub/LinkedIn profiles.
+- [Terminal Monospace Favicon Design](../docs/terminal-favicon-design.md) - Custom SVG terminal bracket `[P]` favicon crafted for razor-sharp tab visibility across dark and light browser chrome.

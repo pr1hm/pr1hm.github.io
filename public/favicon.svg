@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" fill="none">
+  <!-- Dark Obsidian Background with Rounded Geometry -->
+  <rect width="64" height="64" rx="16" fill="#09090b" />
+  
+  <!-- Subtle Monochromatic Outer Rim -->
+  <rect x="1" y="1" width="62" height="62" rx="15" stroke="#27272a" stroke-width="2" />
+  
+  <!-- Subtle Inset Top Highlight -->
+  <line x1="16" y1="2" x2="48" y2="2" stroke="rgba(255, 255, 255, 0.2)" stroke-width="1" stroke-linecap="round" />
+
+  <!-- Terminal Bracket [ -->
+  <path d="M 22 20 L 16 20 L 16 44 L 22 44" stroke="#71717a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+  
+  <!-- Central Character "P" in High-Contrast Monospace Style -->
+  <path d="M 27 44 L 27 20 L 37 20 C 42 20 45 22.5 45 27 C 45 31.5 42 34 37 34 L 27 34" stroke="#f4f4f5" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+  
+  <!-- Terminal Bracket ] -->
+  <path d="M 42 20 L 48 20 L 48 44 L 42 44" stroke="#71717a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+</svg>

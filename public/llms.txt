@@ -1,0 +1,25 @@
+# Pratham Solanki — Portfolio & Knowledge Index
+
+> Pratham Solanki is a Software Developer specializing in DevOps, AI/ML, and Cloud Engineering.
+> Email: ahoy@prthm.xyz
+> Canonical Website: https://prthm.xyz
+> GitHub: https://github.com/pr1hm
+> LinkedIn: https://linkedin.com/in/pr1hm/
+
+## Core Specializations
+- AI & Multimodal Intelligence: Qwen2-VL, OpenAI Whisper, Local Hugging Face Inference, Scene-Change Sampling, Autonomous Examination Proctoring.
+- Systems & Distributed Engineering: Linux Kernel & SysAdmin, In-Process Android Embedded Webservers (NanoHTTPD), POSIX, Socket Programming.
+- Cloud & Web Architecture: FastAPI (Python), Cloudflare Pages & Workers, Node.js & TypeScript, Docker, CI/CD Automation.
+- Commercial Web: High-performance e-commerce and digital showrooms for bespoke furniture manufacturers in Bardoli, Gujarat.
+
+## Key Projects
+- FrameRead: 100% offline local AI video analysis pipeline using Whisper & Qwen2-VL. (Repo: https://github.com/pr1hm/FrameRead)
+- OpenSeal: Open-source digital document signing web app built on FastAPI. (Live: https://openseal.prthm.xyz | Repo: https://github.com/pr1hm/openseal)
+- Conlatus AI: Autonomous proctored technical screening platform with Safe Exam Browser lockdown. (Repo: https://github.com/conlatus/conlatus)
+- Best Furniture & Jeet Furniture: Commercial web deployments for prominent showrooms in Bardoli. (Live: https://bestfurniture.store & https://jeetfurniture.com)
+
+## Technical Writings
+- FrameRead: Building a 100% Offline AI Video Analysis Pipeline with Whisper and Qwen2-VL: https://prthm.xyz/blog/frameread-offline-ai-video-analysis-qwen2vl
+- OpenSeal: Architecting an Open-Source DocuSign Alternative with FastAPI and Canvas Signing: https://prthm.xyz/blog/openseal-fastapi-open-source-docusign-alternative
+- Conlatus AI: Autonomous Multi-Agent Technical Screening & Computer Vision Proctoring: https://prthm.xyz/blog/conlatus-ai-proctored-technical-screening
+- Building In-Process Android Embedded Webservers with NanoHTTPD at Netsol IT Solutions: https://prthm.xyz/blog/netsol-android-embedded-nanohttpd-webserver
