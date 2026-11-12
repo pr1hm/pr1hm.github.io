@@ -58,6 +58,7 @@ interface RingLinkProps {
   rel?: string;
   outerClassName?: string;
   innerClassName?: string;
+  roundedClassName?: string;
   onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
 }
 
@@ -69,6 +70,7 @@ export const RingLink: React.FC<RingLinkProps> = ({
   rel,
   outerClassName,
   innerClassName,
+  roundedClassName = 'rounded-full',
   onClick,
 }) => {
   return (
@@ -85,11 +87,15 @@ export const RingLink: React.FC<RingLinkProps> = ({
     >
       <span
         aria-hidden="true"
-        className="pf-gradient pointer-events-none absolute -inset-[2px] rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        className={cn(
+          'pf-gradient pointer-events-none absolute -inset-[2px] opacity-0 transition-opacity duration-300 group-hover:opacity-100',
+          roundedClassName
+        )}
       />
       <span
         className={cn(
-          'relative inline-flex items-center justify-center gap-1.5 rounded-full transition-colors duration-300',
+          'relative inline-flex items-center justify-center gap-1.5 transition-colors duration-300',
+          roundedClassName,
           innerClassName
         )}
       >

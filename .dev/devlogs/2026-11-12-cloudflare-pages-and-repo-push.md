@@ -21,3 +21,4 @@ We had two major missions:
 The remote repository at **https://github.com/pr1hm/pr1hm.github.io** is now 100% synchronized with the local source code!
 
 All that’s left is linking it into Cloudflare Pages so it serves at **prthm.xyz** with zero-latency global edge caching. Time to pop the champagne! 🍾✨
+

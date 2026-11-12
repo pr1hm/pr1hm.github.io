@@ -49,3 +49,4 @@ Under **Environment variables (advanced)**, add:
 3. Enter `prthm.xyz` (and optionally `www.prthm.xyz`).
 4. Click **Continue** &rarr; **Activate domain**.
 5. Cloudflare will automatically provision SSL/TLS certificates and map edge routing within minutes.
+

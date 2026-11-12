@@ -14,21 +14,6 @@ const ROLE_INTERVAL = 2200;
 
 export const BACKGROUND_VIDEO = 'https://hirael.com/media/templates/portfolio/background.mp4';
 
-const Logo: React.FC = () => {
-  return (
-    <a
-      href="#home"
-      aria-label="Home"
-      onClick={(e) => onAnchorClick(e, '#home')}
-      className="group relative flex size-8 shrink-0 items-center justify-center rounded-full transition-transform duration-300 hover:scale-105"
-    >
-      <span className="pf-gradient absolute inset-0 rounded-full" />
-      <span className="absolute inset-[1.5px] rounded-full bg-[hsl(var(--bg))]" />
-      <span className="font-display relative text-[13px] font-normal leading-none italic text-[#f4f4f5]">PS</span>
-    </a>
-  );
-};
-
 export const FloatingNavbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState('home');
@@ -62,12 +47,10 @@ export const FloatingNavbar: React.FC = () => {
     <nav className="fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-4 md:pt-6 pointer-events-none">
       <div
         className={cn(
-          'pointer-events-auto inline-flex items-center rounded-full border border-white/10 bg-[hsl(var(--surface))]/85 px-2.5 py-1.5 backdrop-blur-xl transition-all duration-300',
+          'pointer-events-auto inline-flex items-center rounded-2xl border border-white/10 bg-[hsl(var(--surface))]/85 px-2 py-1.5 backdrop-blur-xl transition-all duration-300',
           scrolled && 'shadow-2xl shadow-black/90 border-white/15 bg-[hsl(var(--surface))]/95'
         )}
       >
-        <Logo />
-        <span className="mx-2 hidden h-4 w-px bg-[hsl(var(--stroke))] sm:block" />
         <div className="flex items-center gap-1">
           {NAV_LINKS.map((link) => {
             const isActive = active === link.id;
@@ -84,7 +67,7 @@ export const FloatingNavbar: React.FC = () => {
                 }}
                 aria-current={isActive ? 'page' : undefined}
                 className={cn(
-                  'rounded-full px-3 py-1.5 text-xs transition-colors duration-200 sm:px-3.5 sm:py-1.5 font-medium',
+                  'rounded-xl px-3 py-1.5 text-xs transition-colors duration-200 sm:px-3.5 sm:py-1.5 font-medium',
                   isActive
                     ? 'bg-white/10 text-white'
                     : 'text-[hsl(var(--muted))] hover:bg-white/5 hover:text-white'
@@ -96,15 +79,16 @@ export const FloatingNavbar: React.FC = () => {
           })}
           <Link
             to="/blog"
-            className="rounded-full px-3 py-1.5 text-xs sm:px-3.5 sm:py-1.5 font-medium text-[hsl(var(--muted))] hover:bg-white/5 hover:text-white transition-colors"
+            className="rounded-xl px-3 py-1.5 text-xs sm:px-3.5 sm:py-1.5 font-medium text-[hsl(var(--muted))] hover:bg-white/5 hover:text-white transition-colors"
           >
             Blog
           </Link>
         </div>
-        <span className="mx-2 hidden h-4 w-px bg-[hsl(var(--stroke))] sm:block" />
+        <span className="mx-1.5 h-4 w-px bg-[hsl(var(--stroke))]" />
         <RingLink
           href="mailto:ahoy@prthm.xyz"
-          innerClassName="bg-[hsl(var(--surface))] px-3.5 py-1.5 text-xs text-[#f4f4f5] backdrop-blur-md font-medium border border-white/10 hover:border-white/20"
+          roundedClassName="rounded-xl"
+          innerClassName="bg-[hsl(var(--surface))] px-3.5 py-1.5 text-xs text-[#f4f4f5] backdrop-blur-md font-medium border border-white/10 hover:border-white/20 rounded-xl"
         >
           Say hi
           <ArrowUpRight className="size-3" />
